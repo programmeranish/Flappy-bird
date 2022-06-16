@@ -5,4 +5,3 @@ function getRandomNumber(min, max) {
 function toPixel(number) {
   return `${number}px`;
 }
-export { getRandomNumber, toPixel };

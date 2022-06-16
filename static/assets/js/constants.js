@@ -1,0 +1,1 @@
+const BACKGROUNDHEIGHT = 800;
