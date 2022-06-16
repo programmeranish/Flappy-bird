@@ -30,7 +30,7 @@ function playGame() {
   });
 
   //obstacles
-  let obstacleArrays = [];
+  let obstacleArrays = [new Obstacle()];
   let obstacleId = setInterval(() => {
     obstacleArrays.push(new Obstacle());
   }, 5000);
@@ -97,7 +97,7 @@ function playGame() {
             delete shiftedElement;
             score += 1;
             changeScore(score);
-            if (score > highScore) {
+            if (score >= highScore) {
               setHighscore(score);
               highScore = score;
             }
