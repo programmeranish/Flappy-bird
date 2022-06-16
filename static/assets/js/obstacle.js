@@ -14,11 +14,11 @@ class Obstacle {
     this.pipe1.style.width = toPixel(this.width);
     this.pipe1.style.height = "100%";
     this.pipe1.style.position = "absolute";
-    this.pipe1.src = "/static/assets/images/greenPiperotate.png";
+    this.pipe1.src = "./assets/images/greenPiperotate.png";
     this.pipe2.style.width = toPixel(this.width);
     this.pipe2.style.height = "100%";
     this.pipe2.style.position = "absolute";
-    this.pipe2.src = "/static/assets/images/greenPipe.png";
+    this.pipe2.src = "./assets/images/greenPipe.png";
 
     this.pipe1.style.left = "100vw";
     this.pipe2.style.left = "100vw";

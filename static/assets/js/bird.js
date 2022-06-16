@@ -14,7 +14,7 @@ class Bird {
     this.bottomPosition = 200;
     this.birdHeight = birdHeight;
     this.birdWidth = birdWidth;
-    this.bird.src = "/static/assets/images/bird0.png";
+    this.bird.src = "./assets/images/bird0.png";
     this.backgroundContainer.appendChild(this.bird);
   }
   moveDown(moveDownNumber = 5) {
@@ -26,11 +26,16 @@ class Bird {
       moveDownNumber = 0;
     }
     this.bird.style.top = "";
+
+    this.bird.style.transition = "transform 1s";
+    this.bird.style.transform = "rotate(20deg)";
     this.bottomPosition = moveDownNumber;
     this.bird.style.bottom = toPixel(moveDownNumber);
   }
   moveUp(moveUpNumber = 100) {
     let birdPosition = parseInt(window.getComputedStyle(this.bird).top);
+    this.bird.style.transform = "rotate(-30deg)";
+
     moveUpNumber = birdPosition - moveUpNumber;
     if (moveUpNumber < 0) {
       moveUpNumber = 0;
@@ -39,6 +44,14 @@ class Bird {
     this.bird.style.top = toPixel(moveUpNumber);
   }
   animateWings(wingIndex) {
-    this.bird.src = `/static/assets/images/bird${wingIndex}.png`;
+    this.bird.src = `./assets/images/bird${wingIndex}.png`;
+  }
+
+  checkGroundTouch() {
+    if (this.bottomPosition <= 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

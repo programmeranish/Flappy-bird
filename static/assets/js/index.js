@@ -60,11 +60,15 @@ function playGame() {
   let collide = false;
   let gameOverState = false;
   let score = 0;
+  let highScore = 0;
+
+  highScore = getHighscore();
 
   let scoreElement = document.createElement("div");
   function createScoreElement() {
-    scoreElement.textContent = score;
+    scoreElement.innerHTML = `<h1>HighScore:${highScore}</h1><br><h2>Score:${score}</h2>`;
     scoreElement.style.color = "green";
+    scoreElement.style.textAlign = "center";
     scoreElement.style.position = "absolute";
     scoreElement.style.left = "calc(50% - 100px)";
     scoreElement.style.top = "0px";
@@ -75,14 +79,16 @@ function playGame() {
   createScoreElement();
 
   function changeScore(score) {
-    scoreElement.innerText = score;
+    scoreElement.innerHTML = `<h1>HighScore:${highScore}</h1><br><h2>Score:${score}</h2>`;
   }
 
   function moveObstacle() {
     requestAnimationFrame(() => {
       obstacleArrays.forEach((obstacle) => {
         collide = checkCollision(flappyBird, obstacle);
-        if (!collide) {
+        if (collide || flappyBird.checkGroundTouch()) {
+          gameOverState = true;
+        } else {
           obstacle.move();
 
           if (obstacle.checkOutView()) {
@@ -91,9 +97,11 @@ function playGame() {
             delete shiftedElement;
             score += 1;
             changeScore(score);
+            if (score > highScore) {
+              setHighscore(score);
+              highScore = score;
+            }
           }
-        } else {
-          gameOverState = true;
         }
       });
       if (gameOverState) {
@@ -103,7 +111,7 @@ function playGame() {
       }
     });
   }
-  if (!collide) moveObstacle();
+  if (!collide || flappyBird.checkgroundTouch()) moveObstacle();
   else {
     gameOver();
   }
@@ -111,12 +119,13 @@ function playGame() {
     clearInterval(obstacleId);
     clearInterval(wingIntervalId);
     let gameOverText = document.createElement("div");
-    gameOverText.innerHTML = "<h1>Game Over</h1><br><br><h2>Try again</h2>";
-    gameOverText.style.height = "100vh";
-    gameOverText.style.width = "100vw";
+    gameOverText.innerHTML = `<h1>Game Over</h1><br><p>Your Score:${score}<br><h2>Click to Try again</h2>`;
+    gameOverText.id = "game-over";
+    gameOverText.style.height = "100%";
+    gameOverText.style.width = "100%";
     gameOverText.style.textAlign = "center";
     gameOverText.style.position = "absolute";
-    gameOverText.style.backgroundColor = "rgb(0,0,0,0.5)";
+    gameOverText.style.backgroundColor = "rgb(0,0,0,0.8)";
     gameOverText.style.color = "red";
 
     gameOverText.addEventListener("click", () => {
@@ -133,4 +142,17 @@ function playGame() {
   }
 }
 
-playGame();
+let playElement = document.createElement("div");
+playElement.innerHTML = "<h1>Click to play</h1>";
+playElement.style.textAlign = "center";
+playElement.style.height = "100vh";
+playElement.style.width = "100%";
+playElement.style.position = "absolute";
+playElement.style.paddingTop = "300px";
+playElement.addEventListener("click", () => {
+  playElement.remove();
+  playGame();
+});
+document
+  .getElementsByClassName("background-container")[0]
+  .appendChild(playElement);
