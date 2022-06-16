@@ -1,0 +1,22 @@
+{
+  "name": "flappy-bird",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/programmeranish/Flappy-bird.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/programmeranish/Flappy-bird/issues"
+  },
+  "homepage": "https://github.com/programmeranish/Flappy-bird#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

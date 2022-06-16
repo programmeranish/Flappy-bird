@@ -1,5 +1,5 @@
 class Bird {
-  constructor(height = 100, width = 100) {
+  constructor(height = 50, width = 50) {
     this.createBird(height, width);
   }
   createBird(birdHeight, birdWidth) {
@@ -9,13 +9,12 @@ class Bird {
     this.bird = document.createElement("img");
     this.bird.style.height = toPixel(birdHeight);
     this.bird.style.width = toPixel(birdWidth);
-    this.bird.style.backgroundColor = "red";
     this.bird.style.position = "absolute";
     this.bird.style.left = "0px";
     this.bottomPosition = 200;
     this.birdHeight = birdHeight;
     this.birdWidth = birdWidth;
-    this.bird.src = "/static/assets/images/bluebird-downflap.png";
+    this.bird.src = "/static/assets/images/bird0.png";
     this.backgroundContainer.appendChild(this.bird);
   }
   moveDown(moveDownNumber = 5) {
@@ -38,5 +37,8 @@ class Bird {
     }
     this.bird.style.bottom = "";
     this.bird.style.top = toPixel(moveUpNumber);
+  }
+  animateWings(wingIndex) {
+    this.bird.src = `/static/assets/images/bird${wingIndex}.png`;
   }
 }
