@@ -13,19 +13,40 @@ function playGame() {
   let moveDownIntervalId;
   let initialVelocity = 0;
   let birdDownSpeed = 1;
-  function resumeMoveDown() {
+
+  function moveDown() {
+    flappyBird.resetRotateBird();
     moveDownIntervalId = setInterval(() => {
+      flappyBird.faceDown();
       flappyBird.moveDown(initialVelocity + birdDownSpeed);
       initialVelocity += 2;
     }, 1000 / 30);
   }
 
-  document.addEventListener("keydown", (event) => {
+  // moving flappy bird up on key down pressed
+  document.addEventListener("keydown", async (event) => {
     if (event.code === "Space") {
       clearInterval(moveDownIntervalId);
-      flappyBird.moveUp(100);
+      let moveUptoIndex = 200;
+      let movedIndex = 0;
+      function animateUp() {
+        flappyBird.faceUp();
+        return new Promise((resolve, reject) => {
+          requestAnimationFrame(() => {
+            if (movedIndex < moveUptoIndex) {
+              flappyBird.moveUp(1);
+              movedIndex++;
+              animateUp();
+            }
+          });
+
+          resolve("true");
+        });
+      }
+      await animateUp();
+
       initialVelocity = 0;
-      resumeMoveDown();
+      moveDown();
     }
   });
 
@@ -34,8 +55,6 @@ function playGame() {
   let obstacleId = setInterval(() => {
     obstacleArrays.push(new Obstacle());
   }, 5000);
-
-  let obstacle = new Obstacle();
 
   function checkCollision(obj1, obj2) {
     let x1 = 0;

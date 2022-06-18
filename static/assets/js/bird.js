@@ -17,6 +17,16 @@ class Bird {
     this.bird.src = "./assets/images/bird0.png";
     this.backgroundContainer.appendChild(this.bird);
   }
+  moveUp(moveUpNumber = 100) {
+    let birdPosition = parseInt(window.getComputedStyle(this.bird).top);
+
+    moveUpNumber = birdPosition - moveUpNumber;
+    if (moveUpNumber < 0) {
+      moveUpNumber = 0;
+    }
+    this.bird.style.bottom = "";
+    this.bird.style.top = toPixel(moveUpNumber);
+  }
   moveDown(moveDownNumber = 5) {
     let birdBottomPosition = parseInt(
       window.getComputedStyle(this.bird).bottom
@@ -26,23 +36,20 @@ class Bird {
       moveDownNumber = 0;
     }
     this.bird.style.top = "";
-
-    this.bird.style.transition = "transform 1s";
-    this.bird.style.transform = "rotate(20deg)";
     this.bottomPosition = moveDownNumber;
     this.bird.style.bottom = toPixel(moveDownNumber);
   }
-  moveUp(moveUpNumber = 100) {
-    let birdPosition = parseInt(window.getComputedStyle(this.bird).top);
+  faceUp() {
     this.bird.style.transform = "rotate(-30deg)";
-
-    moveUpNumber = birdPosition - moveUpNumber;
-    if (moveUpNumber < 0) {
-      moveUpNumber = 0;
-    }
-    this.bird.style.bottom = "";
-    this.bird.style.top = toPixel(moveUpNumber);
   }
+  faceDown() {
+    this.bird.style.transform = "rotate(60deg)";
+  }
+
+  resetRotateBird() {
+    this.bird.style.transform = "";
+  }
+
   animateWings(wingIndex) {
     this.bird.src = `./assets/images/bird${wingIndex}.png`;
   }
